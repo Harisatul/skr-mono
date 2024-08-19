@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+
+  mono-service-db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: haris123
+      POSTGRES_DB: postgres
+    volumes:
+      - mono_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.55
+    ports:
+      - 16686:16686
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    command: [ "--config=/etc/otel-collector.yaml" ]
+    ports:
+      - 4317:4317
+    depends_on:
+      - jaeger
+    volumes:
+      - ./otel-collector.yaml:/etc/otel-collector.yaml
+
+
+volumes:
+  mono_data:

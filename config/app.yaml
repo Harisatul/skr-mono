@@ -1,0 +1,17 @@
+server:
+  port: 5000
+  read_timeout: 1
+  write_timeout: 1
+
+db:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: haris123
+  db_name: postgres
+  ssl_mode: disable
+  min_conn: 3
+  max_conn: 200
+
+kafka:
+  broker: localhost:9092
